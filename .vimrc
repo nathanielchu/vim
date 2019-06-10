@@ -1,14 +1,20 @@
 " Configuration
 
 " Pathogen first
-
 " execute pathogen#infect()
+
+" vim-plug
+if empty(glob('~/.vim/autoload/plug.vim'))
+    silent !curl -fLo ~/.vim/autoload/plug.vim --create-dirs
+    \ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+    autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
+endif
 
 " Basic Settings
 
 filetype plugin indent on
 syntax on
-set shell=/bin/zsh
+set shell=/bin/bash
 set guifont=Menlo:h14
 set nocompatible
 set modelines=0
@@ -66,3 +72,22 @@ let mapleader = ","
 
 vnoremap . :norm.<CR>
 
+" source
+so ~/.vim/plugins.vim
+
+" fzf
+" control p for Files
+nnoremap <C-p> :Files<Cr>
+" Replace the default dictionary completion with fzf-based fuzzy completion
+inoremap <expr> <c-x><c-k> fzf#vim#complete('cat /usr/share/dict/words')
+" Insert mode fzf complete file ag
+imap <c-x><c-j> <plug>(fzf-complete-file-ag)
+
+" lightline powerline configuration
+let g:lightline = {
+            \ 'colorscheme': 'solarized',
+            \ }
+set background=dark
+
+" coc configuration
+set updatetime=300
