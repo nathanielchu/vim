@@ -7,5 +7,6 @@ Plug 'junegunn/fzf.vim'
 Plug 'tpope/vim-surround'
 Plug 'w0rp/ale'
 Plug 'neoclide/coc.nvim', {'do': { -> coc#util#install()}}
+Plug 'ludovicchabant/vim-gutentags'
 
 call plug#end()
