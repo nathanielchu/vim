@@ -101,3 +101,6 @@ map <C-k> <C-W>k
 map <C-h> <C-W>h
 map <C-l> <C-W>l
 
+" gutentags configuration
+let g:gutentags_cache_dir = expand('~/.cache/tags')
+
