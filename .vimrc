@@ -1,8 +1,5 @@
 " Configuration
 
-" Pathogen first
-" execute pathogen#infect()
-
 " vim-plug
 if empty(glob('~/.vim/autoload/plug.vim'))
     silent !curl -fLo ~/.vim/autoload/plug.vim --create-dirs
@@ -17,6 +14,8 @@ syntax on
 set shell=/bin/bash
 set guifont=Menlo:h14
 set nocompatible
+set pastetoggle=<F2>
+set mouse=nvi
 set modelines=0
 set tabstop=4
 set shiftwidth=4
@@ -59,7 +58,7 @@ set colorcolumn=80
 " Aesthetics
 
 " colorscheme solarized
-" set background=light
+set background=dark
 
 " Mappings and shortcuts
 
@@ -87,15 +86,13 @@ imap <c-x><c-j> <plug>(fzf-complete-file-ag)
 let g:lightline = {
             \ 'colorscheme': 'solarized',
             \ }
-set background=dark
-
+ 
 " coc configuration
 set updatetime=300
 
 " vim splits
 set splitbelow
 set splitright
-
 map <C-j> <C-W>j
 map <C-k> <C-W>k
 map <C-h> <C-W>h
@@ -104,3 +101,8 @@ map <C-l> <C-W>l
 " gutentags configuration
 let g:gutentags_cache_dir = expand('~/.cache/tags')
 
+" ale configuration
+let g:ale_linters = {'cpp': ['clang'], 'java': [], 'yaml': [], 'scala': [], 'clojure': []}
+let g:ale_lint_delay = 1000
+nmap ]a <Plug>(ale_next_wrap)
+nmap [a <Plug>(ale_previous_wrap)
