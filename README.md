@@ -10,6 +10,7 @@ This contains a vim environment setup for backup and portability.
 sudo apt-get install nodejs
 sudo apt-get install yarn
 sudo apt-get install ctags
+sudo ./install-ripgrep.sh
 ```
 
 Install the required plugin dependencies.
@@ -25,7 +26,7 @@ Create a link to use this vimrc.
 Then run the following in Vim:
 
 ```
-:source %
+:source ~/.vimrc
 :PlugInstall
 ```
 
