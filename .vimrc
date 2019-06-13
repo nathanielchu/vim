@@ -1,108 +1,122 @@
 " Configuration
+" Use Vim settings, rather than Vi settings
+" This must be set first, because it changes other options as a side effect.
+set nocompatible
 
-" vim-plug
-if empty(glob('~/.vim/autoload/plug.vim'))
-    silent !curl -fLo ~/.vim/autoload/plug.vim --create-dirs
-    \ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
-    autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
-endif
-
-" Basic Settings
-
-filetype plugin indent on
+" ================ General Config ====================
 syntax on
 set shell=/bin/bash
 set guifont=Menlo:h14
-set nocompatible
-set pastetoggle=<F2>
-set mouse=nvi
+set encoding=utf-8
+set hidden
+set ttyfast
+
+set backspace=indent,eol,start
+set history=1000
+set showcmd
+set showmode
+set gcr=a:blinkon0              "Disable cursor blink
+set mouse=nvi                   "Enable mouse
+set autoread                    "Reload files changed outside vim
+set laststatus=2
 set modelines=0
+set pastetoggle=<F2>
+
+set wrap
+set linebreak
+set formatoptions=qrn1
+set ruler
+" set colorcolumn=80
+" set visualbell
+" set spell spelllang=en_us
+
+" ================ Mappings ====================
+
+let mapleader = ","
+inoremap jk <ESCi>
+" Tab to move to associated (), {}, []
+nnoremap <tab> %
+vnoremap <tab> %
+vnoremap . :norm.<CR>
+
+" ================ Gutter line numbers ====================
+set number
+set relativenumber
+
+" ================ Centralize meta files ==============
+set backupdir=~/.vim/backups
+set directory=~/.vim/swaps
+
+" Don’t create backups when editing files in certain directories
+set backupskip=/tmp/*,/private/tmp/*
+
+" ================ Persistent Undo ==================
+" Keep undo history across sessions, by storing in file.
+" Only works all the time.
+if has('persistent_undo') && isdirectory(expand('~').'/.vim/undo')
+  silent !mkdir ~/.vim/undo > /dev/null 2>&1
+  set undodir=~/.vim/undo
+  set undofile
+endif
+
+" ================ Indentation ======================
+set autoindent
+set smartindent
+set smarttab
 set tabstop=4
 set shiftwidth=4
 set softtabstop=4
 set expandtab
-set encoding=utf-8
-set scrolloff=3
-set autoindent
-set showmode
-set showcmd
-set hidden
-set wildmenu
+filetype plugin on
+filetype indent on
+
+" Display tabs and trailing spaces visually
+" set list listchars=tab:\ \ ,trail:·
+" set list listchars=tab:»·,trail:·,nbsp:·
+set listchars=tab:»\ ,extends:›,precedes:‹,nbsp:·,trail:·
+
+" ================ Folds ============================
+
+set foldmethod=indent   "fold based on indent
+set foldnestmax=3       "deepest fold is 3 levels
+set nofoldenable        "dont fold by default
+
+" ================ Completion =======================
+
 set wildmode=list:longest
-" set visualbell
-set ttyfast
-set ruler
-set backspace=indent,eol,start
-set laststatus=2
-set number
-set relativenumber
-set noundofile
+set wildmenu                "enable ctrl-n and ctrl-p to scroll thru matches
+set wildignore=*.o,*.obj,*~ "stuff to ignore when tab completing
+set wildignore+=*vim/backups*
+set wildignore+=*sass-cache*
+set wildignore+=*DS_Store*
+set wildignore+=vendor/rails/**
+set wildignore+=vendor/cache/**
+set wildignore+=*.gem
+set wildignore+=log/**
+set wildignore+=tmp/**
+set wildignore+=*.png,*.jpg,*.gif
+
+" ================ Scrolling ========================
+
+" Start scrolling wen we're 3 lines away from margins
+set scrolloff=3
+
+" ================ Search ===========================
+
+set incsearch       " Find the next match as we type the search
+set hlsearch        " Highlight searches by default
+set ignorecase      " Ignore case when searching...
+set smartcase       " ...unless we type a capital
+set gdefault        " Add the g flag to search/replace by default
+set showmatch
 nnoremap / /\v
 vnoremap / /\v
-set ignorecase
-set smartcase
-set gdefault
-set incsearch
-set showmatch
-set hlsearch
 nnoremap <leader><space> :noh<cr>
-nnoremap <tab> %
-vnoremap <tab> %
-set wrap
-set linebreak
-set nolist
-set formatoptions=qrn1
-" set spell spelllang=en_us
-set colorcolumn=80
 
-" Aesthetics
+" ================ Aesthetics ===========================
 
-" colorscheme solarized
 set background=dark
 
-" Mappings and shortcuts
-
-" Basics
-
-inoremap jk <ESC>
-let mapleader = ","
-
-" Miscellaneous
-
-vnoremap . :norm.<CR>
-
-" source
+" source config file form vim plugins
 so ~/.vim/plugins.vim
 
-" fzf
-" control p for Files
-nnoremap <C-p> :Files<Cr>
-" Replace the default dictionary completion with fzf-based fuzzy completion
-inoremap <expr> <c-x><c-k> fzf#vim#complete('cat /usr/share/dict/words')
-" Insert mode fzf complete file ag
-imap <c-x><c-j> <plug>(fzf-complete-file-ag)
-
-" lightline powerline configuration
-let g:lightline = {
-            \ 'colorscheme': 'solarized',
-            \ }
- 
-" coc configuration
-set updatetime=300
-
-" vim splits
-set splitbelow
-set splitright
-map <C-j> <C-W>j
-map <C-k> <C-W>k
-map <C-h> <C-W>h
-map <C-l> <C-W>l
-
-" gutentags configuration
-let g:gutentags_cache_dir = expand('~/.cache/tags')
-
-" ale configuration
-let g:ale_linters = {'cpp': ['clang'], 'java': [], 'yaml': [], 'scala': [], 'clojure': []}
-let g:ale_lint_delay = 1000
-nmap ]a <Plug>(ale_next_wrap)
-nmap [a <Plug>(ale_previous_wrap)
