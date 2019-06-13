@@ -44,6 +44,9 @@ set number
 set relativenumber
 
 " ================ Centralize meta files ==============
+silent !mkdir ~/.vim/backups > /dev/null 2>&1
+silent !mkdir ~/.vim/swaps > /dev/null 2>&1
+
 set backupdir=~/.vim/backups
 set directory=~/.vim/swaps
 
@@ -51,9 +54,8 @@ set directory=~/.vim/swaps
 set backupskip=/tmp/*,/private/tmp/*
 
 " ================ Persistent Undo ==================
-" Keep undo history across sessions, by storing in file.
-" Only works all the time.
-if has('persistent_undo') && isdirectory(expand('~').'/.vim/undo')
+" Keep undo history across sessions by storing in file.
+if has('persistent_undo')
   silent !mkdir ~/.vim/undo > /dev/null 2>&1
   set undodir=~/.vim/undo
   set undofile
