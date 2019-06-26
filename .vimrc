@@ -22,6 +22,7 @@ set laststatus=2
 set modelines=0
 set pastetoggle=<F2>
 
+set display+=lastline           "Display as much of last line as possible
 set wrap
 set linebreak
 set formatoptions=qrn1
